@@ -1,4 +1,4 @@
-# imports
+# imports 
 import streamlit as st
 st.set_page_config(layout="wide", page_title='predict-salary',page_icon='icons8-salary-100.png')
 from streamlit_option_menu import option_menu
