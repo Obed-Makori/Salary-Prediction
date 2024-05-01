@@ -38,45 +38,91 @@ if selected=="Dashboard":
     </style>
     """,unsafe_allow_html=True)
     with col1:
+            ##salary
+        fig = px.histogram(df,
+                        x='Salary',
+                        marginal='box',
+                        title='Distribution of Salary',
+                        color='Education Level',
+                        color_discrete_sequence=['red', 'grey', 'black']
+                        )
+        fig.update_layout(bargap=0.1,height=500)
+        fig.update_layout(
+            {
+                #"paper_bgcolor": '#ff4b4b',
+                #"plot_bgcolor": "rgba(0, 0, 0, 0)",
+            }
+        )
+        st.plotly_chart(fig,use_container_width=True)  
+        #################graph 2
+        opt=st.checkbox('Variables...')
+        opt2=st.checkbox('Variables')
         
-        st.write(df.tail(3))
-        # gender distribution pie chart
-        gender_counts=df['Gender'].value_counts()
-        fig=px.pie(df,names=gender_counts.index, values=gender_counts.values)
-        st.plotly_chart(fig, theme=None, use_container_width=True)
+
+      
         
     with col2:
-        st.write(df.head(3))
-        fig=px.bar(df, x=gender_counts.index, y=gender_counts.values)
-        st.plotly_chart(fig,theme=None,use_container_width=True)
-
-       
+         ##salary
+        fig=px.histogram(df, 
+                 x='Age', 
+                 marginal='box',
+                 nbins=47,
+                 title='Distribution of Age',
+                 color_discrete_sequence=['#ff4b4b']
+                 )
+        fig.update_layout(bargap=0.1,height=500)
+        st.plotly_chart(fig,use_container_width=True) 
 
 
 
     with col3:
         import streamlit_antd_components as sac
 
-        btn = sac.buttons(
-            items=['Histogram', 'Bar Chart'],
-            index=0,
-            format_func='title',
-            align='center',
-            direction='horizontal',
-            radius='lg',
-            return_index=False,
-        )
-        
-        if btn=='Histogram':
-            # fig 1 column 3
-            fig1=px.histogram(df['Salary'], x=df['Salary'], nbins=20)
-            st.plotly_chart(fig1, theme=None, use_container_width=True)
+        # btn = sac.buttons(
+        #     items=['Histogram', 'Bar Chart'],
+        #     index=0,
+        #     format_func='title',
+        #     align='center',
+        #     direction='horizontal',
+        #     radius='lg',
+        #     return_index=False,
+        # )
+        btn=st.selectbox(label='',options=['Education Level VS Salary','Education Level VS Age'],index=None,placeholder='Education Level...')
+        if btn=='Education Level VS Salary':
+                ##Categorical features
+            fig = px.histogram(df,
+                            x='Gender',
+                            y='Salary',                                                   
+                            color_discrete_sequence=['#ff4b4b']
+                            )
+            fig.update_layout(bargap=0.1,height=400)
+            st.plotly_chart(fig,use_container_width=True)
         else:
-            # fig 2 column 3
-            fig=px.bar(df, x=gender_counts.index, y=gender_counts.values)
-            st.plotly_chart(fig,theme=None,use_container_width=True)
+            ##salary
+            fig = px.histogram(df,
+                            x='Age',
+                            marginal='box',
+                            title='Distribution of Salary',
+                            color='Education Level',
+                            #color_discrete_sequence=['red', 'grey', 'black']
+                            )
+            fig.update_layout(bargap=0.1)
+            #borrowed settingd
+            fig.update_layout(
+                {
+                    "paper_bgcolor": "rgba(0, 0, 0, 0)",
+                    "plot_bgcolor": "rgba(0, 0, 0, 0)",
+                }
+            )
+
+            # displaying the graph
+            st.plotly_chart(fig)
+
+        
+        
+
+        
 #Report
-# Dashboard
 if selected=="Report":
     st.markdown("<h2 style='text-align: center; color: red'> SALARY REPORT </h2>", unsafe_allow_html=True)
 
