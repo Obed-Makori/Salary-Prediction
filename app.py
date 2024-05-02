@@ -127,11 +127,17 @@ if selected=="Report":
     st.markdown("<h2 style='text-align: center; color: red'> SALARY REPORT </h2>", unsafe_allow_html=True)
 
     st.write("Salary Dataset Analysis")
+    ddd=pd.read_csv('Salary Prediction dataset.csv')
+    st.write(ddd)
 
 # Dashboard
 if selected=="Predict":
-    st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
-    st.write('Quicky predict Your Salary,..Key In your Details: -')
+    # st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
+    choice=st.selectbox(label='',options=['Raw Data','Correlation Report'], placeholder='Select a report...', index=None)
+    if choice=='Raw Data':
+        st.write('Quicky predict Your Salary,..Key In your Details: -')
+    else:
+        st.write(sns.heatmap(pd.corr(df)))
 
 
 
