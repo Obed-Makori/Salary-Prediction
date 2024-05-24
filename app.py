@@ -56,8 +56,7 @@ if selected=="Dashboard":
         st.plotly_chart(fig,use_container_width=True)  
         #################graph 2
         opt=st.checkbox('Variables...')
-        opt2=st.checkbox('Variables')
-        
+        opt2=st.checkbox('Variables')     
 
       
         
