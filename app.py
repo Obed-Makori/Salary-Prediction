@@ -20,14 +20,8 @@ selected = option_menu(None,
     default_index=0, orientation='horizontal')
 # tittle
 #st.markdown("<h1 style='text-align: center; color: #FF7F50;'>Emplpoyees' Salary Prediction</h1>", unsafe_allow_html=True)
-
-
-
-
-
 # Dashboard
 if selected=="Dashboard":
-
     st.markdown("<h2 style='text-align: center; color: red'> SALARY DASHBOARD </h2>", unsafe_allow_html=True)
     col1, col2, col3=st.columns(3)
     st.markdown("""
@@ -54,11 +48,10 @@ if selected=="Dashboard":
             }
         )
         st.plotly_chart(fig,use_container_width=True)  
-        #################graph 2
+        #################  graph 2
         opt=st.checkbox('Variables...')
-        opt2=st.checkbox('Variables')     
-
-      
+        opt2=st.checkbox('Variables')
+ 
         
     with col2:
          ##salary
@@ -113,14 +106,9 @@ if selected=="Dashboard":
                     "plot_bgcolor": "rgba(0, 0, 0, 0)",
                 }
             )
-
             # displaying the graph
             st.plotly_chart(fig)
-
-        
-        
-
-        
+             
 #Report
 if selected=="Report":
     st.markdown("<h2 style='text-align: center; color: red'> SALARY REPORT </h2>", unsafe_allow_html=True)
@@ -128,8 +116,7 @@ if selected=="Report":
     st.write("Salary Dataset Analysis")
     ddd=pd.read_csv('Salary Prediction dataset.csv')
     st.write(ddd)
-
-# Dashboard
+# Predict
 if selected=="Predict":
     # st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
     choice=st.selectbox(label='',options=['Raw Data','Correlation Report'], placeholder='Select a report...', index=None)
@@ -138,14 +125,7 @@ if selected=="Predict":
     else:
         st.write(sns.heatmap(pd.corr(df)))
 
-
-
-   
-    
-    
-
-
-# Dashboard
+# Notebook
 if selected=="Notebook":
     st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
 
@@ -165,9 +145,6 @@ if selected=="Notebook":
         dynamic_filters.display_filters()
 
     dynamic_filters.display_df()
-
-
-
 
 ###############################   FOOTER
 
