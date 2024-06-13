@@ -10,10 +10,9 @@ import numpy as np
 import warnings
 import plotly_express as px
 warnings.filterwarnings("ignore")
-
 # used dataset
 df=pd.read_csv('Salary Prediction dataset.csv')
-
+#
 selected = option_menu(None, 
                        ["Dashboard", "Report", "Predict", "Notebook"], 
     icons=['bar-chart-line-fill', 'clipboard2-data-fill', "graph-up", "journal-arrow-down"],
@@ -148,21 +147,17 @@ if selected=="Notebook":
 
 ###############################   FOOTER
 
-import streamlit as st
-
 footer="""<style>
 a:link , a:visited{
 color: blue;
 background-color: transparent;
 text-decoration: underline;
 }
-
 a:hover,  a:active {
 color: red;
 background-color: transparent;
 text-decoration: underline;
 }
-
 .footer {
 position: fixed;
 left: 0;
@@ -178,5 +173,3 @@ text-align: center;
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)
-
-
