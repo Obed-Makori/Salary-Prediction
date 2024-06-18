@@ -1,0 +1,7 @@
+### Introduction
+Salary is a core component that most job applicants consider while seeking for new roles. However, 
+it is not a cake-breaking moment to decide what salary to provide when asked for your desired salary for the new role.
+And therefore, this project aims at providing you with an approximate figure to provide based on your 
+basic variables such as age, years of experience, role applying for, and level of education. 
+On the other hand, it is crucial to understand how salary associates with various factors. As such, 
+this report provides you with basic insights obtained from my analysis.

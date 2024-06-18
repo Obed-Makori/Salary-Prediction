@@ -111,18 +111,44 @@ if selected=="Dashboard":
 #Report
 if selected=="Report":
     st.markdown("<h2 style='text-align: center; color: red'> SALARY REPORT </h2>", unsafe_allow_html=True)
+    def open_report(filepath):
+        with open(filepath,'r') as file:
+            return file.read()
+    filepath='report.txt'
+    report_content=open_report(filepath)
+    st.write(report_content)
+    
+    # figure 1
+    fig1=px.line(df,x='Years of Experience',y='Salary',title='Salary Correlations')
+    st.plotly_chart(fig1)
 
-    st.write("Salary Dataset Analysis")
-    ddd=pd.read_csv('Salary Prediction dataset.csv')
-    st.write(ddd)
-# Predict
+                                                            # Predict
+                                                                        # Prediction
+
 if selected=="Predict":
-    # st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
-    choice=st.selectbox(label='',options=['Raw Data','Correlation Report'], placeholder='Select a report...', index=None)
-    if choice=='Raw Data':
-        st.write('Quicky predict Your Salary,..Key In your Details: -')
-    else:
-        st.write(sns.heatmap(pd.corr(df)))
+     # prediction form        
+     with st.form('prediction-form'):
+         st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
+         #age
+         age=st.number_input("Age ", value=18)
+         # years of experience
+         experience=st.number_input("Years of Experience ", placeholder="years of experience",value=2)
+         #job titlle
+         roles=[]
+         for role in df['Job Title']:
+             roles.append(role)
+         roles.append('Other')
+         job__title=st.selectbox("Job Title",[None]+roles) 
+
+         # Gender
+         gender=st.select_slider("Gender", ('Male','Female'))
+
+
+            #submit form     ############
+         submitted=st.form_submit_button('Predict')
+         if submitted:             
+             st.success("Thank you for trying") 
+  
 
 # Notebook
 if selected=="Notebook":
