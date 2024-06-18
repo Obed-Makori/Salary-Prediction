@@ -10,24 +10,17 @@ import numpy as np
 import warnings
 import plotly_express as px
 warnings.filterwarnings("ignore")
-
 # used dataset
 df=pd.read_csv('Salary Prediction dataset.csv')
-
+#
 selected = option_menu(None, 
                        ["Dashboard", "Report", "Predict", "Notebook"], 
     icons=['bar-chart-line-fill', 'clipboard2-data-fill', "graph-up", "journal-arrow-down"],
     default_index=0, orientation='horizontal')
 # tittle
 #st.markdown("<h1 style='text-align: center; color: #FF7F50;'>Emplpoyees' Salary Prediction</h1>", unsafe_allow_html=True)
-
-
-
-
-
 # Dashboard
 if selected=="Dashboard":
-
     st.markdown("<h2 style='text-align: center; color: red'> SALARY DASHBOARD </h2>", unsafe_allow_html=True)
     col1, col2, col3=st.columns(3)
     st.markdown("""
@@ -54,11 +47,10 @@ if selected=="Dashboard":
             }
         )
         st.plotly_chart(fig,use_container_width=True)  
-        #################graph 2
+        #################  graph 2
         opt=st.checkbox('Variables...')
-        opt2=st.checkbox('Variables')     
-
-      
+        opt2=st.checkbox('Variables')
+ 
         
     with col2:
          ##salary
@@ -113,39 +105,52 @@ if selected=="Dashboard":
                     "plot_bgcolor": "rgba(0, 0, 0, 0)",
                 }
             )
-
             # displaying the graph
             st.plotly_chart(fig)
-
-        
-        
-
-        
+             
 #Report
 if selected=="Report":
     st.markdown("<h2 style='text-align: center; color: red'> SALARY REPORT </h2>", unsafe_allow_html=True)
+    def open_report(filepath):
+        with open(filepath,'r') as file:
+            return file.read()
+    filepath='report.txt'
+    report_content=open_report(filepath)
+    st.write(report_content)
+    
+    # figure 1
+    fig1=px.line(df,x='Years of Experience',y='Salary',title='Salary Correlations')
+    st.plotly_chart(fig1)
 
-    st.write("Salary Dataset Analysis")
-    ddd=pd.read_csv('Salary Prediction dataset.csv')
-    st.write(ddd)
+                                                            # Predict
+                                                                        # Prediction
 
-# Dashboard
 if selected=="Predict":
-    # st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
-    choice=st.selectbox(label='',options=['Raw Data','Correlation Report'], placeholder='Select a report...', index=None)
-    if choice=='Raw Data':
-        st.write('Quicky predict Your Salary,..Key In your Details: -')
-    else:
-        st.write(sns.heatmap(pd.corr(df)))
+     # prediction form        
+     with st.form('prediction-form'):
+         st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
+         #age
+         age=st.number_input("Age ", value=18)
+         # years of experience
+         experience=st.number_input("Years of Experience ", placeholder="years of experience",value=2)
+         #job titlle
+         roles=[]
+         for role in df['Job Title']:
+             roles.append(role)
+         roles.append('Other')
+         job__title=st.selectbox("Job Title",[None]+roles) 
+
+         # Gender
+         gender=st.select_slider("Gender", ('Male','Female'))
 
 
+            #submit form     ############
+         submitted=st.form_submit_button('Predict')
+         if submitted:             
+             st.success("Thank you for trying") 
+  
 
-   
-    
-    
-
-
-# Dashboard
+# Notebook
 if selected=="Notebook":
     st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
 
@@ -166,12 +171,7 @@ if selected=="Notebook":
 
     dynamic_filters.display_df()
 
-
-
-
 ###############################   FOOTER
-
-import streamlit as st
 
 footer="""<style>
 a:link , a:visited{
@@ -179,13 +179,11 @@ color: blue;
 background-color: transparent;
 text-decoration: underline;
 }
-
 a:hover,  a:active {
 color: red;
 background-color: transparent;
 text-decoration: underline;
 }
-
 .footer {
 position: fixed;
 left: 0;
@@ -201,5 +199,3 @@ text-align: center;
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)
-
-
