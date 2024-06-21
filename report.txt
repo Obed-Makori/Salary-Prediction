@@ -5,3 +5,4 @@ And therefore, this project aims at providing you with an approximate figure to 
 basic variables such as age, years of experience, role applying for, and level of education. 
 On the other hand, it is crucial to understand how salary associates with various factors. As such, 
 this report provides you with basic insights obtained from my analysis.
+

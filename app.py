@@ -6,6 +6,7 @@ import seaborn as sns
 import plotly as pt
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 import warnings
 import plotly_express as px
@@ -48,8 +49,12 @@ if selected=="Dashboard":
         )
         st.plotly_chart(fig,use_container_width=True)  
         #################  graph 2
-        opt=st.checkbox('Variables...')
-        opt2=st.checkbox('Variables')
+        #correlations
+        df3=pd.read_csv('df.csv')
+        fig, ax = plt.subplots()
+        sns.heatmap(df3.corr(), ax=ax, cmap='YlGnBu',annot=True)
+        st.write(fig)
+
  
         
     with col2:
@@ -63,7 +68,10 @@ if selected=="Dashboard":
                  )
         fig.update_layout(bargap=0.1,height=500)
         st.plotly_chart(fig,use_container_width=True) 
-
+        # graph 3
+        
+       
+        
 
 
     with col3:
@@ -126,41 +134,61 @@ if selected=="Report":
                                                                         # Prediction
 
 if selected=="Predict":
+     import joblib
+     lenc=joblib.load('label_encoder.svm')
+     model=joblib.load('version1.svm')
      # prediction form        
-     with st.form('prediction-form'):
+     with st.form('prediction-form',border=False,clear_on_submit=True):
          st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
+         sub={}
          #age
-         age=st.number_input("Age ", value=18)
-         # years of experience
-         experience=st.number_input("Years of Experience ", placeholder="years of experience",value=2)
+         sub['Age']=st.number_input("Age ", value=18)
+         # Gender
+         sub['Gender']=st.radio("Gender", ('Male','Female'))
+         # Education Level
+         sub['Education Level']=st.radio("Level of Education",["Bachelor's", "Master's", 'PhD'])
          #job titlle
          roles=[]
          for role in df['Job Title']:
              roles.append(role)
          roles.append('Other')
-         job__title=st.selectbox("Job Title",[None]+roles) 
+         sub['Job_ Title']=st.selectbox("Job Title",[None]+roles) 
+         # years of experience
+         sub['Years of Experience']=st.number_input("Years of Experience ", placeholder="years of experience",value=2)
+        
 
-         # Gender
-         gender=st.select_slider("Gender", ('Male','Female'))
+                  
+                     #submit form     ############
+         ###make a dataframe
+         sub_df=pd.DataFrame([sub])
 
+         import pickle
 
-            #submit form     ############
-         submitted=st.form_submit_button('Predict')
-         if submitted:             
-             st.success("Thank you for trying") 
-  
+         with open('gen.pickle','rb') as f:
+             le=pickle.load(f)
+         sub_df['Gender']=le.transform(sub_df['Gender'])
+        
 
+         
+              
+        # make a prediction        
+
+                    
+         submitted=st.form_submit_button(label='Predict')
+         if submitted: 
+             st.write(sub_df)            
+              
 # Notebook
 if selected=="Notebook":
     st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
 
     from streamlit_dynamic_filters import DynamicFilters
 
-    data = {
+    data=pd.DataFrame([{
         'Region': ['North America', 'North America', 'North America', 'Europe', 'Europe', 'Asia', 'Asia'],
         'Country': ['USA', 'USA', 'Canada', 'Germany', 'France', 'Japan', 'China'],
         'City': ['New York', 'Los Angeles', 'Toronto', 'Berlin', 'Paris', 'Tokyo', 'Beijing']
-        }
+        }])
 
     df = pd.DataFrame(data)
 
@@ -173,29 +201,29 @@ if selected=="Notebook":
 
 ###############################   FOOTER
 
-footer="""<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
-}
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
-}
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: #0E1117;
-color: white;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p>Developed by <a style='display: block; text-align: center;' href="https://twitter.com/ObedMakori254" target="_blank"; text-color: green>Makori Obed</a></p>
-</div>
-"""
-st.markdown(footer,unsafe_allow_html=True)
+# footer="""<style>
+# a:link , a:visited{
+# color: blue;
+# background-color: transparent;
+# text-decoration: underline;
+# }
+# a:hover,  a:active {
+# color: red;
+# background-color: transparent;
+# text-decoration: underline;
+# }
+# .footer {
+# position: fixed;
+# left: 0;
+# bottom: 0;
+# width: 100%;
+# background-color: #0E1117;
+# color: white;
+# text-align: center;
+# }
+# </style>
+# <div class="footer">
+# <p>Developed by <a style='display: block; text-align: center;' href="https://twitter.com/ObedMakori254" target="_blank"; text-color: green>Makori Obed</a></p>
+# </div>
+# """
+# st.markdown(footer,unsafe_allow_html=True)
