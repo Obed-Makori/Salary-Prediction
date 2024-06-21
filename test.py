@@ -1,16 +1,10 @@
 import streamlit as st
+import pandas as pd
+import seaborn as sns
+df3=pd.read_csv('df.csv')
 
-# Function to read the content of the text file
-def read_text_file(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
+import matplotlib.pyplot as plt
 
-# Path to your text file
-file_path = 'report.txt'
-
-# Read the content of the text file
-file_content = read_text_file(file_path)
-
-# Display the content in the Streamlit app
-st.title('Text File Content')
-st.write(file_content)
+fig, ax = plt.subplots()
+sns.heatmap(df3.corr(), ax=ax)
+st.write(fig)
