@@ -135,8 +135,8 @@ if selected=="Report":
 
 if selected=="Predict":
      import joblib
-     lenc=joblib.load('label_encoder.svm')
-     model=joblib.load('version1.svm')
+     
+     
      # prediction form        
      with st.form('prediction-form',border=False,clear_on_submit=True):
          st.markdown("<h2 style='text-align: center; color: red'> PREDICTION FORM </h2>", unsafe_allow_html=True)
@@ -152,7 +152,7 @@ if selected=="Predict":
          for role in df['Job Title']:
              roles.append(role)
          roles.append('Other')
-         sub['Job_ Title']=st.selectbox("Job Title",[None]+roles) 
+         sub['Job Title']=st.selectbox("Job Title",roles) 
          # years of experience
          sub['Years of Experience']=st.number_input("Years of Experience ", placeholder="years of experience",value=2)
         
@@ -163,20 +163,32 @@ if selected=="Predict":
          sub_df=pd.DataFrame([sub])
 
          import pickle
-
+            #################   Encoding Gender
          with open('gen.pickle','rb') as f:
              le=pickle.load(f)
          sub_df['Gender']=le.transform(sub_df['Gender'])
-        
-
-         
+        #################   Encoding Level of Education
+         with open('edu.pickle','rb') as f:
+                        le=pickle.load(f)
+         sub_df['Education Level']=le.transform(sub_df['Education Level'])
+                 #################   Encoding   Job Title
+         with open('job.pickle','rb') as f:
+             le=pickle.load(f)
+         sub_df['Job Title']=le.transform(sub_df['Job Title'])
               
-        # make a prediction        
+        # make a prediction
+         model=joblib.load(open('version1.svm','rb'))
+         prediction=model.predict(sub_df)        
 
                     
          submitted=st.form_submit_button(label='Predict')
          if submitted: 
-             st.write(sub_df)            
+             st.write(sub_df)
+             message='' 
+             prediction=round(prediction[0],0)
+             st.success(prediction, icon="💸") 
+            
+                      
               
 # Notebook
 if selected=="Notebook":
