@@ -7,6 +7,7 @@ import plotly as pt
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 import warnings
 import plotly_express as px
@@ -182,10 +183,11 @@ if selected=="Predict":
 
                     
          submitted=st.form_submit_button(label='Predict')
-         if submitted: 
-             st.write(sub_df)
-             message='' 
+         if submitted:
              prediction=round(prediction[0],0)
+             st.toast("Please wait")
+             time.sleep(.05)
+             #st.write(sub_df)
              st.success(prediction, icon="💸") 
             
                       
