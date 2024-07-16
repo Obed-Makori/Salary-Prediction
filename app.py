@@ -8,7 +8,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-
 import warnings
 import plotly_express as px
 warnings.filterwarnings("ignore")
@@ -197,47 +196,47 @@ if selected=="Notebook":
     st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
 
     from streamlit_dynamic_filters import DynamicFilters
-
-    data=pd.DataFrame([{
-        'Region': ['North America', 'North America', 'North America', 'Europe', 'Europe', 'Asia', 'Asia'],
-        'Country': ['USA', 'USA', 'Canada', 'Germany', 'France', 'Japan', 'China'],
-        'City': ['New York', 'Los Angeles', 'Toronto', 'Berlin', 'Paris', 'Tokyo', 'Beijing']
-        }])
-
-    df = pd.DataFrame(data)
-
-    dynamic_filters = DynamicFilters(df, filters=['Region', 'Country', 'City'])
-
+    # dataset
+    data=pd.read_csv('Salary Prediction dataset.csv')
+    # dynamic filters in the side bar
     with st.sidebar:
-        dynamic_filters.display_filters()
+         dff=st.selectbox('MAIN DASHBOARD',['fIRST oP','Second opn'])
+        #  dff=st.multiselect('MAIN DASHBOARD',['fIRST oP','Second opn'])
+         dff2=st.radio("SECOND LABEL",['First','Second','Third'])
+    if dff=='fIRST oP':
+              st.success('Just testing...')
+    elif dff=='Second opn':
+              st.write(df.describe())
+              with open('salary.html', 'r') as file:
+                   file.read()
+              
+        #  dynamic_filters=DynamicFilters(data, filters='Gender', 'Job Title')
+        #  dynamic_filters.display_filters()
+##############################   FOOTER
 
-    dynamic_filters.display_df()
-
-###############################   FOOTER
-
-# footer="""<style>
-# a:link , a:visited{
-# color: blue;
-# background-color: transparent;
-# text-decoration: underline;
-# }
-# a:hover,  a:active {
-# color: red;
-# background-color: transparent;
-# text-decoration: underline;
-# }
-# .footer {
-# position: fixed;
-# left: 0;
-# bottom: 0;
-# width: 100%;
-# background-color: #0E1117;
-# color: white;
-# text-align: center;
-# }
-# </style>
-# <div class="footer">
-# <p>Developed by <a style='display: block; text-align: center;' href="https://twitter.com/ObedMakori254" target="_blank"; text-color: green>Makori Obed</a></p>
-# </div>
-# """
-# st.markdown(footer,unsafe_allow_html=True)
+footer="""<style>
+a:link , a:visited{
+color: blue;
+background-color: transparent;
+text-decoration: underline;
+}
+a:hover,  a:active {
+color: red;
+background-color: transparent;
+text-decoration: underline;
+}
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: #0E1117;
+color: white;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Developed by <a style='display: block; text-align: center;' href="https://twitter.com/ObedMakori254" target="_blank"; text-color: green>Makori Obed</a></p>
+</div>
+"""
+st.markdown(footer,unsafe_allow_html=True)
