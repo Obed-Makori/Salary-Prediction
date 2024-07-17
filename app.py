@@ -22,7 +22,9 @@ selected = option_menu(None,
 #st.markdown("<h1 style='text-align: center; color: #FF7F50;'>Emplpoyees' Salary Prediction</h1>", unsafe_allow_html=True)
 # Dashboard
 if selected=="Dashboard":
-    st.markdown("<h2 style='text-align: center; color: red'> SALARY DASHBOARD </h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center; color: red'> SALARY DASHBOARD </h2>", unsafe_allow_html=True)
+       
+    #columns
     col1, col2, col3=st.columns(3)
     st.markdown("""
     <style>
@@ -32,6 +34,8 @@ if selected=="Dashboard":
     </style>
     """,unsafe_allow_html=True)
     with col1:
+        st.markdown("<h5 style='color: red; text-align: center;'> TOTAL: USD 5,000</h5>", unsafe_allow_html=True)
+                   
             ##salary
         fig = px.histogram(df,
                         x='Salary',
@@ -55,9 +59,9 @@ if selected=="Dashboard":
         sns.heatmap(df3.corr(), ax=ax, cmap='YlGnBu',annot=True)
         st.write(fig)
 
- 
         
     with col2:
+        st.markdown("<h5 style='color: red; text-align: center;'> Avg. Salary: USD 45,000</h5>", unsafe_allow_html=True)
          ##salary
         fig=px.histogram(df, 
                  x='Age', 
@@ -75,6 +79,7 @@ if selected=="Dashboard":
 
 
     with col3:
+        st.markdown("<h5 style='color: red; text-align: center;'> Most Popular Job: Data Analyst</h5>", unsafe_allow_html=True)
         import streamlit_antd_components as sac
 
         # btn = sac.buttons(
@@ -193,22 +198,23 @@ if selected=="Predict":
               
 # Notebook
 if selected=="Notebook":
-    st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center; color: red'> USED PYTHON NOTEBOOK </h2>", unsafe_allow_html=True)
 
     from streamlit_dynamic_filters import DynamicFilters
     # dataset
     data=pd.read_csv('Salary Prediction dataset.csv')
     # dynamic filters in the side bar
     with st.sidebar:
-         dff=st.selectbox('MAIN DASHBOARD',['fIRST oP','Second opn'])
+         st.image('sal-pred.png',width=250)
+
+         cln=st.selectbox('Exploratory Data Analysis (EDA)',[c for c in df.columns])
         #  dff=st.multiselect('MAIN DASHBOARD',['fIRST oP','Second opn'])
-         dff2=st.radio("SECOND LABEL",['First','Second','Third'])
-    if dff=='fIRST oP':
-              st.success('Just testing...')
-    elif dff=='Second opn':
+         display=st.radio("SECOND LABEL",['First','Second','Third'])
+    if cln=='Age':
+              st.line_chart(df['Age'])
+    elif cln=='Gender':
               st.write(df.describe())
-              with open('salary.html', 'r') as file:
-                   file.read()
+             
               
         #  dynamic_filters=DynamicFilters(data, filters='Gender', 'Job Title')
         #  dynamic_filters.display_filters()
@@ -236,7 +242,7 @@ text-align: center;
 }
 </style>
 <div class="footer">
-<p>Developed by <a style='display: block; text-align: center;' href="https://twitter.com/ObedMakori254" target="_blank"; text-color: green>Makori Obed</a></p>
+<p>Developed by <a style='display: block; text-align: center;' href="https://obed-makori.github.io/" target="_blank"; text-color: green>Makori Obed</a></p>
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)
