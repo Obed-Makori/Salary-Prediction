@@ -7,7 +7,7 @@ import plotly as pt
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-# import time
+import time
 import warnings
 import plotly_express as px
 warnings.filterwarnings("ignore")
