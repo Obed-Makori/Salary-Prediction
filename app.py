@@ -7,7 +7,7 @@ import plotly as pt
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import time
+# import time
 import warnings
 import plotly_express as px
 warnings.filterwarnings("ignore")
@@ -213,7 +213,7 @@ if selected=="Notebook":
     if cln=='Age':
               st.line_chart(df['Age'])
     elif cln=='Gender':
-              st.write(df.describe())
+              st.write(df.describe())  
              
               
         #  dynamic_filters=DynamicFilters(data, filters='Gender', 'Job Title')
